@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:w12_quiz/data/mock_grocery_repository.dart';
 
 import '../../models/grocery.dart';
 
@@ -54,9 +55,10 @@ class _NewItemState extends State<NewItem> {
   final groceryName = _nameController.text;
   final groceryQuantity = int.parse(_quantityController.text);
 
-  Grocery newGrocery = Grocery(id: '1', name: groceryName, quantity: groceryQuantity, category: _selectedCategory),
+  Grocery newGrocery = Grocery(id: '1', name: groceryName, quantity: groceryQuantity, category: _selectedCategory);
 
-  Navigator.of(context).pop(NewItem())
+  dummyGroceryItems.add(newGrocery);
+  Navigator.of(context).pop(newGrocery);
   }
 
   @override
