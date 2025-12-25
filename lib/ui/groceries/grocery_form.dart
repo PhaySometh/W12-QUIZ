@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/grocery.dart';
@@ -43,10 +44,19 @@ class _NewItemState extends State<NewItem> {
 
   void onReset() {
     // Will be implemented later - Reset all fields to the initial values
+    _nameController.text = defautName;
+    _quantityController.text = defaultQuantity.toString();
+    _selectedCategory = defaultCategory;
   }
 
   void onAdd() {
     // Will be implemented later - Create and return the new grocery
+  final groceryName = _nameController.text;
+  final groceryQuantity = int.parse(_quantityController.text);
+
+  Grocery newGrocery = Grocery(id: '1', name: groceryName, quantity: groceryQuantity, category: _selectedCategory),
+
+  Navigator.of(context).pop(NewItem())
   }
 
   @override
@@ -76,7 +86,6 @@ class _NewItemState extends State<NewItem> {
                 Expanded(
                   child: DropdownButtonFormField<GroceryCategory>(
                     initialValue: _selectedCategory,
-                    items: [  ],
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
@@ -84,6 +93,23 @@ class _NewItemState extends State<NewItem> {
                         });
                       }
                     },
+                    items: GroceryCategory.values
+                        .map<DropdownMenuItem<GroceryCategory>>((GroceryCategory value) {
+                          return DropdownMenuItem<GroceryCategory>(
+                            value: value,
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 15,
+                                  height: 15,
+                                  color: value.color,
+                                ),
+                                SizedBox(width: 5,),
+                                Text(value.name.toUpperCase()),
+                              ]
+                            )
+                      );
+                    }).toList(),
                   ),
                 ),
               ],
